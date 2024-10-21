@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dropdown Functionality</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+
+    <!-- Dropdown Structure -->
+    <div class="dropdown">
+        <!-- Button to toggle dropdown, with aria-expanded for accessibility -->
+        <button type="button" class="dropdown-toggle" dropdown-target="dropdown1" aria-expanded="false">
+            HTML
+            <span class="dropdown-arrow ml-2">
+                <!-- Chevron icon for arrow, which rotates on click -->
+                <i class="fas fa-chevron-right"></i>
+            </span>
+        </button>
+
+        <!-- Dropdown content that is initially hidden -->
+        <div class="dropdown-content hidden" dropdown-target-id="dropdown1">
+            <a href="#" class="block">Introduction to HTML</a>
+            <a href="#" class="block">HTML Elements</a>
+            <a href="#" class="block">HTML Attributes</a>
+            <a href="#" class="block">HTML Forms</a>
+        </div>
+    </div>
+
+    <script>
+        // Functionality to manage dropdown toggle behavior
+        let dropdowns = document.querySelectorAll('.dropdown');
+        dropdowns.forEach(dropdown => {
+
+            let button = dropdown.querySelector('button.dropdown-toggle');
+            let dropdownItems = dropdown.querySelector('.dropdown-content');
+
+            // Click event listener for the dropdown toggle button
+            dropdown.querySelector('button.dropdown-toggle').addEventListener('click', function () {
+                let targetId = this.getAttribute('dropdown-target'); // Get the target dropdown ID
+                let dropdownItems = dropdown.querySelector(`.dropdown-content[dropdown-target-id="${targetId}"]`);
+
+                // Toggle the visibility of dropdown content
+                dropdownItems.classList.toggle('hidden');
+
+                // Update the aria-expanded attribute for accessibility
+                let isExpanded = this.getAttribute('aria-expanded') === 'true';
+                this.setAttribute('aria-expanded', !isExpanded);
+
+                // Rotate the arrow icon based on the dropdown's visibility
+                this.querySelector('span.dropdown-arrow i').style.transform = dropdownItems.classList.contains('hidden') ? 'rotate(0deg)' : 'rotate(90deg)';
+            });
+        });
+    </script>
+</body>
+</html>
